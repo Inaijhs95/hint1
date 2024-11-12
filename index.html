@@ -104,7 +104,8 @@
 
     function showCompletionPopup() {
         setTimeout(() => {
-            alert("Data leak complete. Redirecting now...");
+            // アクセス確認のためにフラグを設定
+            localStorage.setItem("access_A", "true");
             window.location.href = "https://inaijhs95.my.canva.site/secret2025";
         }, 500);
     }
