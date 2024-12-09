@@ -107,19 +107,37 @@
         <div class="comment">
             <p>”あかもじみぎからよめ”
 赤文字を右から読んでみましょう。</p>
+          </div>
+        <div class="more-hint">
+            <a href="#" id="more-button-2">さらに見る</a>
         </div>
     </div>
-</div>
+
+    <!-- ヒント3表示エリア（文字のみ） -->
+    <div class="hint-section" id="hint3-section">
+        <div class="comment">
+            <p>これが3つ目のヒントです（文字のみ）。ここには画像はありません。</p>
+            <p>このヒントから答えに近づけるかもしれません。</p>
+        </div>
+    </div>
 
 <script>
+    // ヒント1表示
     document.getElementById('yes-button').addEventListener('click', function(e) {
         e.preventDefault();
         document.getElementById('hint1-section').style.display = 'block';
     });
 
-    document.getElementById('more-button').addEventListener('click', function(e) {
+    // ヒント2表示
+    document.getElementById('more-button-1').addEventListener('click', function(e) {
         e.preventDefault();
         document.getElementById('hint2-section').style.display = 'block';
+    });
+
+    // ヒント3（文字のみ）表示
+    document.getElementById('more-button-2').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('hint3-section').style.display = 'block';
     });
 
     document.getElementById('no-button').addEventListener('click', function(e) {
