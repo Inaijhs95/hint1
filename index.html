@@ -1,116 +1,130 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>System Error Notification</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ヒント確認ページ</title>
 <style>
     body {
-        background-color: #000;
-        color: #00ff00;
-        font-family: 'Courier New', Courier, monospace;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-        height: 100vh;
-        padding: 20px;
-        overflow: hidden;
+        font-family: sans-serif;
+        background: #ffffff;
+        color: #333333;
+        margin: 0;
+        padding: 0;
     }
-    .message {
-        font-size: 1.2em;
-        line-height: 1.5;
-        white-space: pre-wrap;
-        width: 100%;
+
+    .container {
         max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #333;
+        background: #f9f9f9;
     }
-    @keyframes blink {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0; }
+
+    .container p {
+        line-height: 1.6;
     }
-    .cursor {
+
+    .buttons {
+        margin-top: 20px;
+    }
+
+    .buttons a {
         display: inline-block;
-        width: 10px;
-        background-color: #00ff00;
-        animation: blink 0.5s infinite;
+        margin-right: 10px;
+        text-decoration: none;
+        color: #333;
+        border: 1px solid #333;
+        padding: 5px 10px;
+        font-size: 0.9em;
+        transition: all 0.3s ease;
+    }
+
+    .buttons a:hover {
+        background: #333;
+        color: #fff;
+    }
+
+    .hint-section {
+        margin-top: 30px;
+        display: none;
+    }
+
+    .hint-section img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 20px 0;
+        border: 1px solid #333;
+    }
+
+    .comment {
+        font-size: 0.9em;
+        margin-bottom: 20px;
+    }
+
+    .more-hint {
+        margin-top: 20px;
+    }
+
+    .more-hint a {
+        font-size: 0.9em;
+        text-decoration: none;
+        color: #333;
+        border-bottom: 1px solid #333;
+        padding-bottom: 2px;
+    }
+
+    .more-hint a:hover {
+        color: #000;
+        border-bottom: 1px solid #000;
     }
 </style>
 </head>
 <body>
 
-<div class="message" id="message"></div>
-<div class="cursor"></div>
+<div class="container">
+    <p>ヒントを確認しますか？</p>
+    <div class="buttons">
+        <a href="#" id="yes-button">はい</a>
+        <a href="#" id="no-button">いいえ</a>
+    </div>
+
+    <!-- 最初のヒント表示エリア -->
+    <div class="hint-section" id="hint1-section">
+        <img src="hint1.png" alt="ヒント1">
+        <div class="comment">
+            <p>これが最初のヒントです。</p>
+        </div>
+        <div class="more-hint">
+            <a href="#" id="more-button">さらに見る</a>
+        </div>
+    </div>
+
+    <!-- 2つ目のヒント表示エリア -->
+    <div class="hint-section" id="hint2-section">
+        <img src="hint2.png" alt="ヒント2">
+        <div class="comment">
+            <p>これが2つ目のヒントです。</p>
+        </div>
+    </div>
+</div>
 
 <script>
-    const messages = [
-        "Personal info leaked: Name, age, address",
-        "Detected IP: 192.168.1.1",
-        "Credit card number found: **** **** **** 5619",
-        "Accessing photo album... Found 2,342 photos",
-        "Email contents are being read",
-        "Browsing history: Top 10 visited sites",
-        "Detected: Recent searches - 'How to hide money'",
-        "Leaking contact list (230 contacts)",
-        "Access to WhatsApp messages: 1,239 chats",
-        "Location tracking activated",
-        "Found passwords: Gmail, Facebook, Instagram",
-        "Searching phone storage... Found secret folder",
-        "Camera activated... Capturing front camera",
-        "Microphone activated... Recording audio",
-        "Detected connected devices: 5 devices",
-        "Bluetooth access: Syncing data from nearby devices",
-        "Uploading all local files to server",
-        "Accessing clipboard data: Copied text found",
-        "Searching bank account details...",
-        "Found recent bank transactions",
-        "Tracking app usage: High usage of social media",
-        "VPN disconnected. IP exposed",
-        "Streaming video from gallery... Complete",
-        "Detected dark web searches: 'Buy fake ID'",
-        "Phone number leaked: +81 0*0-****-****",
-        "Complete access to SMS messages",
-        "Detected attempts to delete files",
-        "Accessing cloud storage... Downloading",
-        "Contacting all connected devices",
-        "Live screen recording started",
-        "Data collection: 100% complete. Uploading"
-    ];
+    document.getElementById('yes-button').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('hint1-section').style.display = 'block';
+    });
 
-    const messageElement = document.getElementById('message');
-    let messageIndex = 0;
-    let charIndex = 0;
-    const typingSpeed = 10; // 高速表示
-    const messageDelay = 100; // メッセージ切り替えの遅延時間
+    document.getElementById('more-button').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('hint2-section').style.display = 'block';
+    });
 
-    function typeMessage() {
-        if (messageIndex < messages.length) {
-            if (charIndex < messages[messageIndex].length) {
-                messageElement.textContent += messages[messageIndex].charAt(charIndex);
-                charIndex++;
-                setTimeout(typeMessage, typingSpeed);
-            } else {
-                messageElement.textContent += "\n";
-                charIndex = 0;
-                messageIndex++;
-                setTimeout(() => {
-                    window.scrollTo(0, document.body.scrollHeight);
-                    typeMessage();
-                }, messageDelay);
-            }
-        } else {
-            showCompletionPopup();
-        }
-    }
-
-    function showCompletionPopup() {
-        setTimeout(() => {
-            // アクセス確認のためにフラグを設定
-            localStorage.setItem("access_A", "true");
-            window.location.href = "https://inaijhs95.my.canva.site/secret2025";
-        }, 500);
-    }
-
-    typeMessage();
+    document.getElementById('no-button').addEventListener('click', function(e) {
+        e.preventDefault();
+        alert('また後でお試しください。');
+    });
 </script>
 
 </body>
